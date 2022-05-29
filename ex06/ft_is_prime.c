@@ -6,7 +6,7 @@
 /*   By: yrabby <yrabby@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 14:37:38 by yrabby            #+#    #+#             */
-/*   Updated: 2022/05/27 15:06:21 by yrabby           ###   ########.fr       */
+/*   Updated: 2022/05/29 14:33:23 by yrabby           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_sqrt(int nb)
 	long	start;
 	long	end;
 	long	mid;
+	long	ret;
 
 	start = 0;
 	end = nb;
@@ -29,11 +30,16 @@ int	ft_sqrt(int nb)
 		if (mid * mid == nb)
 			return ((int)mid);
 		if (mid * mid < nb)
+		{
+			ret = start;
 			start = mid + 1;
+		}
 		else
 			end = mid - 1;
 	}
-	return (0);
+	while (ret * ret < nb)
+		++ret;
+	return (ret - 1);
 }
 
 int	ft_is_prime(int nb)
@@ -41,21 +47,21 @@ int	ft_is_prime(int nb)
 	int	sqrt;
 	int	i;
 
-	if (nb == 0 || nb == 1)
+	if (nb == 2 || nb == 3)
+		return (IS_PRIME);
+	if (nb < 2 || nb % 2 == 0)
 		return (NOT_PRIME);
-	i = 0;
+	if (nb < 9)
+		return (IS_PRIME);
+	if (nb % 3 == 0)
+		return (NOT_PRIME);
 	sqrt = ft_sqrt(nb);
-	while (!sqrt)
-	{
-		++i;
-		sqrt = ft_sqrt(nb - i);
-	}
-	i = 2;
+	i = 5;
 	while (i <= sqrt)
 	{
-		if (nb % i == 0)
+		if (nb % i == 0 || nb % (i + 2) == 0)
 			return (NOT_PRIME);
-		++i;
+		i += 6;
 	}
 	return (IS_PRIME);
 }
